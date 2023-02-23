@@ -22,13 +22,11 @@ export const ImageLabels: Plugin<'bar', ImageLabelsOptions> = {
             const display = resolve([options.display, DEFAULT_OPTIONS.display]);
             if (display) {
                 const imageSize = resolve([options.imageSize, DEFAULT_OPTIONS.imageSize]) as number;
-                const images = resolve([options.images, DEFAULT_OPTIONS.images]) as Array<HTMLImageElement>;
+                const images = resolve([options.images, DEFAULT_OPTIONS.images]) as Array<HTMLImageElement | null>;
                 const newPadding = Utils.getXImagesPadding(chart, images.length, imageSize, options.direction);
-                if (chart.config.options?.scales?.[DEFAULT_IMAGES_SCALE]?.ticks) {
-                    const oldPadding = chart.config.options.scales[DEFAULT_IMAGES_SCALE].ticks.padding as number;
-                    if (Math.floor(newPadding) !== Math.floor(oldPadding)) {
-                        chart.config.options.scales[DEFAULT_IMAGES_SCALE].ticks.padding = newPadding;
-                    }
+                const oldPadding = chart.config.options!.scales![DEFAULT_IMAGES_SCALE]!.ticks!.padding as number;
+                if (Math.floor(newPadding) !== Math.floor(oldPadding)) {
+                    chart.config.options!.scales![DEFAULT_IMAGES_SCALE]!.ticks!.padding = newPadding;
                 }
             }
         }
