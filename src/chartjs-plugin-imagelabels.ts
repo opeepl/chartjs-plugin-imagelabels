@@ -1,7 +1,7 @@
-import { Chart, Plugin, Scale } from 'chart.js';
+import type { Chart, Plugin, Scale } from 'chart.js';
 import { DEFAULT_IMAGES_SCALE, DEFAULT_OPTIONS, IMAGE_PLACEHOLDER } from './defaults';
 
-import { ImageLabelsOptions } from './image-labels-options';
+import type { ImageLabelsOptions } from './image-labels-options';
 import Utils from './utils';
 import { resolve } from 'chart.js/helpers';
 

@@ -1,4 +1,4 @@
-import { ImageLabelsOptions } from './image-labels-options';
+import type { ImageLabelsOptions } from './image-labels-options';
 // This is the standard image-off.svg, but with a couple extra attributes:
 // - <svg width="24" height="24">, this fixes an issue with Firefox being unable to draw SVGs on a canvas
 // - <path fill="#BDBDBD">, a slightly gray color for the image itself

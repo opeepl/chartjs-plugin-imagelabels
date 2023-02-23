@@ -1,7 +1,7 @@
-import { Chart } from 'chart.js';
+import type { Chart } from 'chart.js';
 import { DEFAULT_IMAGES_SCALE } from './defaults';
 import GeometryUtils from './geometry-utils';
-import { ImageLabelsOptions } from './image-labels-options';
+import type { ImageLabelsOptions } from './image-labels-options';
 
 export default class Utils {
     private static readonly placeholderBackgroundColor = '#E9EAED';

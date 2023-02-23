@@ -1,5 +1,5 @@
-import { ChartType } from 'chart.js';
-import { ImageLabelsOptions } from './image-labels-options';
+import type { ChartType } from 'chart.js';
+import type { ImageLabelsOptions } from './image-labels-options';
 
 // This module augmentation allows typehinting of options in Vue files
 declare module 'chart.js' {
