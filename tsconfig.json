@@ -1,11 +1,11 @@
 {
     "compilerOptions": {
         "target": "ES6",
-        "module": "commonjs",
+        "module": "esnext",
+        "moduleResolution": "node",
         "declaration": true,
         "outDir": "./dist",
         "strict": true,
-        "esModuleInterop": true
     },
     "include": ["src"],
     "files": ["src/svg.d.ts"],
