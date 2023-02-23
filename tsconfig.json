@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "commonjs",
+        "declaration": true,
+        "outDir": "./dist",
+        "strict": true
+    },
+    // Also copy the SVG files
+    "include": ["src", "src/**/*.svg"],
+    "exclude": ["node_modules", "**/__tests__/*"]
+}
