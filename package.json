@@ -6,7 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "copy-svg": "cp src/*.svg dist/",
-        "build": "tsc && npm run copy-svg"
+        "build": "tsc && npm run copy-svg",
+        "lint": "eslint . --ext .ts",
+        "lint-and-fix": "eslint . --ext .ts --fix"
     },
     "repository": {
         "type": "git",
