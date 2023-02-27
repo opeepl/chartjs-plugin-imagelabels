@@ -17,7 +17,7 @@ describe('GeometryUtils.resizeRect', () => {
         expect(newRect.height).toBe(20);
     });
 
-    it('shoud shrink a square', () => {
+    it('should shrink a square', () => {
         const oldRect = { width: 10, height: 10 };
         const newSize = 5;
         const newRect = GeometryUtils.resizeRect(oldRect, newSize);
