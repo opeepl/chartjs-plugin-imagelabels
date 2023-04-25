@@ -1,5 +1,5 @@
 {
-    "name": "chartjs-plugin-imagelabels",
+    "name": "@opeepl/chartjs-plugin-imagelabels",
     "version": "1.0.0",
     "description": "An image labels plugin for ChartJS 3",
     "main": "dist/index.js",
