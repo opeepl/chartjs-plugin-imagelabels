@@ -1,4 +1,5 @@
-import type { Chart } from 'chart.js';
+import type { Chart, CoreScaleOptions, Scale } from 'chart.js';
+
 import { DEFAULT_IMAGES_SCALE } from './defaults';
 import GeometryUtils from './geometry-utils';
 import type { ImageLabelsOptions } from './image-labels-options';
@@ -10,8 +11,13 @@ export default class Utils {
     /**
      * Finds the maximum width or height of an image for the given chart, based on the number of images and a custom size limit.
      */
-    public static findMaxImageSize(chart: Chart<'bar'>, imageCount: number, configMax: number, direction: ImageLabelsOptions['direction']): number {
-        const imagesScale = chart.scales[DEFAULT_IMAGES_SCALE];
+    public static findMaxImageSize(
+        scales: Record<string, Scale<CoreScaleOptions>>,
+        imageCount: number,
+        configMax: number,
+        direction: ImageLabelsOptions['direction'],
+    ): number {
+        const imagesScale = scales[DEFAULT_IMAGES_SCALE];
         const imagesScalePixelLength = direction === 'horizontal' ? imagesScale.width : imagesScale.height;
 
         return Math.min(configMax, imagesScalePixelLength / imageCount);
@@ -22,7 +28,7 @@ export default class Utils {
      * minus some offset to move the xAxis scale closer to this scale.
      */
     public static getXImagesPadding(chart: Chart<'bar'>, imageCount: number, configMax: number, direction: ImageLabelsOptions['direction']): number {
-        const maxImageSize = Utils.findMaxImageSize(chart, imageCount, configMax, direction);
+        const maxImageSize = Utils.findMaxImageSize(chart.scales, imageCount, configMax, direction);
         const chartAreaOffset = direction === 'horizontal' ? -Utils.imagesScaleOffset : 0;
         return maxImageSize / 2 + chartAreaOffset;
     }
