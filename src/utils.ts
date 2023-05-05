@@ -1,12 +1,29 @@
 import type { Chart, CoreScaleOptions, Scale } from 'chart.js';
+import { DEFAULT_IMAGES_SCALE, DEFAULT_OPTIONS } from './defaults';
 
-import { DEFAULT_IMAGES_SCALE } from './defaults';
 import GeometryUtils from './geometry-utils';
 import type { ImageLabelsOptions } from './image-labels-options';
+import { resolve } from 'chart.js/helpers';
 
 export default class Utils {
     private static readonly placeholderBackgroundColor = '#E9EAED';
     private static readonly imagesScaleOffset = 10;
+
+    /**
+     * Resolves all the options to defined or default values.
+     */
+    public static resolveOptions(options: ImageLabelsOptions): Required<ImageLabelsOptions> {
+        return {
+            display: resolve([options.display, DEFAULT_OPTIONS.display]) as boolean,
+            imagesScaleName: resolve([options.imagesScaleName, DEFAULT_IMAGES_SCALE]) as string,
+            categoryScaleName: resolve([options.categoryScaleName, DEFAULT_OPTIONS.categoryScaleName]) as string,
+            imageSize: resolve([options.imageSize, DEFAULT_OPTIONS.imageSize]) as number,
+            images: resolve([options.images, DEFAULT_OPTIONS.images]) as Array<HTMLImageElement>,
+            paddingClose: resolve([options.paddingClose, DEFAULT_OPTIONS.paddingClose]) as number,
+            paddingFar: resolve([options.paddingFar, DEFAULT_OPTIONS.paddingFar]) as number,
+            direction: resolve([options.direction, DEFAULT_OPTIONS.direction]) as 'horizontal' | 'vertical',
+        };
+    }
 
     /**
      * Finds the maximum width or height of an image for the given chart, based on the number of images and a custom size limit.

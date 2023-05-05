@@ -11,6 +11,7 @@ export const DEFAULT_OPTIONS = {
     images: [],
     direction: 'horizontal',
     imagesScaleName: DEFAULT_IMAGES_SCALE,
+    categoryScaleName: 'xAxis',
 } as Required<ImageLabelsOptions>;
 
 export const IMAGE_PLACEHOLDER = new Image();
