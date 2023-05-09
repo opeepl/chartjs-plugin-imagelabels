@@ -1,17 +1,40 @@
-import type { Chart } from 'chart.js';
-import { DEFAULT_IMAGES_SCALE } from './defaults';
+import type { Chart, CoreScaleOptions, Scale } from 'chart.js';
+import { DEFAULT_IMAGES_SCALE, DEFAULT_OPTIONS } from './defaults';
+
 import GeometryUtils from './geometry-utils';
 import type { ImageLabelsOptions } from './image-labels-options';
+import { resolve } from 'chart.js/helpers';
 
 export default class Utils {
     private static readonly placeholderBackgroundColor = '#E9EAED';
     private static readonly imagesScaleOffset = 10;
 
     /**
+     * Resolves all the options to defined or default values.
+     */
+    public static resolveOptions(options: ImageLabelsOptions): Required<ImageLabelsOptions> {
+        return {
+            display: resolve([options.display, DEFAULT_OPTIONS.display]) as boolean,
+            imagesScaleName: resolve([options.imagesScaleName, DEFAULT_IMAGES_SCALE]) as string,
+            categoryScaleName: resolve([options.categoryScaleName, DEFAULT_OPTIONS.categoryScaleName]) as string,
+            imageSize: resolve([options.imageSize, DEFAULT_OPTIONS.imageSize]) as number,
+            images: resolve([options.images, DEFAULT_OPTIONS.images]) as Array<HTMLImageElement>,
+            paddingInner: resolve([options.paddingInner, DEFAULT_OPTIONS.paddingInner]) as number,
+            paddingOuter: resolve([options.paddingOuter, DEFAULT_OPTIONS.paddingOuter]) as number,
+            direction: resolve([options.direction, DEFAULT_OPTIONS.direction]) as 'horizontal' | 'vertical',
+        };
+    }
+
+    /**
      * Finds the maximum width or height of an image for the given chart, based on the number of images and a custom size limit.
      */
-    public static findMaxImageSize(chart: Chart<'bar'>, imageCount: number, configMax: number, direction: ImageLabelsOptions['direction']): number {
-        const imagesScale = chart.scales[DEFAULT_IMAGES_SCALE];
+    public static findMaxImageSize(
+        scales: Record<string, Scale<CoreScaleOptions>>,
+        imageCount: number,
+        configMax: number,
+        direction: ImageLabelsOptions['direction'],
+    ): number {
+        const imagesScale = scales[DEFAULT_IMAGES_SCALE];
         const imagesScalePixelLength = direction === 'horizontal' ? imagesScale.width : imagesScale.height;
 
         return Math.min(configMax, imagesScalePixelLength / imageCount);
@@ -22,7 +45,7 @@ export default class Utils {
      * minus some offset to move the xAxis scale closer to this scale.
      */
     public static getXImagesPadding(chart: Chart<'bar'>, imageCount: number, configMax: number, direction: ImageLabelsOptions['direction']): number {
-        const maxImageSize = Utils.findMaxImageSize(chart, imageCount, configMax, direction);
+        const maxImageSize = Utils.findMaxImageSize(chart.scales, imageCount, configMax, direction);
         const chartAreaOffset = direction === 'horizontal' ? -Utils.imagesScaleOffset : 0;
         return maxImageSize / 2 + chartAreaOffset;
     }
