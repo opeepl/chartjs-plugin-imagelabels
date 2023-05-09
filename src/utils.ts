@@ -19,8 +19,8 @@ export default class Utils {
             categoryScaleName: resolve([options.categoryScaleName, DEFAULT_OPTIONS.categoryScaleName]) as string,
             imageSize: resolve([options.imageSize, DEFAULT_OPTIONS.imageSize]) as number,
             images: resolve([options.images, DEFAULT_OPTIONS.images]) as Array<HTMLImageElement>,
-            paddingClose: resolve([options.paddingClose, DEFAULT_OPTIONS.paddingClose]) as number,
-            paddingFar: resolve([options.paddingFar, DEFAULT_OPTIONS.paddingFar]) as number,
+            paddingInner: resolve([options.paddingInner, DEFAULT_OPTIONS.paddingInner]) as number,
+            paddingOuter: resolve([options.paddingOuter, DEFAULT_OPTIONS.paddingOuter]) as number,
             direction: resolve([options.direction, DEFAULT_OPTIONS.direction]) as 'horizontal' | 'vertical',
         };
     }

@@ -19,7 +19,7 @@ export interface ImageLabelsOptions {
      * Right padding for vertical direction.
      * @default 10
      */
-    paddingClose?: number;
+    paddingInner?: number;
     /**
      * The padding further from the chart.
      *
@@ -27,9 +27,9 @@ export interface ImageLabelsOptions {
      * Left padding for vertical direction.
      * @default 0
      */
-    paddingFar?: number;
+    paddingOuter?: number;
     /**
-     * The list of images to display above each category axis label. Null values are skipped.
+     * The list of images to display above each category axis label. Placeholder image is used for null values.
      * @default []
      */
     images: Array<HTMLImageElement | null>;

@@ -13,8 +13,8 @@ import { resolve } from 'chart.js/helpers';
  * {
  *   display: true,
  *   imageSize: 48,
- *   paddingClose: 10,
- *   paddingFar: 0,
+ *   paddingInner: 10,
+ *   paddingOuter: 0,
  *   images: [],
  *   direction: 'horizontal',
  *   imagesScaleName: 'imagesScale',
@@ -25,11 +25,10 @@ import { resolve } from 'chart.js/helpers';
 export const ImageLabels: Plugin<'bar', ImageLabelsOptions> = {
     id: 'imagelabels',
     afterDataLimits(chart: Chart<'bar'>, args: { scale: Scale }, options: ImageLabelsOptions): void {
-        if (args.scale.id === DEFAULT_IMAGES_SCALE) {
+        const { display, direction, imageSize, images, paddingInner, paddingOuter, imagesScaleName } = Utils.resolveOptions(options);
+        if (args.scale.id === imagesScaleName) {
             // we're only interested in the images axis
-            const display = resolve([options.display, DEFAULT_OPTIONS.display]);
             if (display) {
-                const { direction, imageSize, images, paddingClose, paddingFar, imagesScaleName } = Utils.resolveOptions(options);
                 const isHorizontal = direction === 'horizontal';
                 const maxSize = Utils.findMaxImageSize(chart.scales, images.length, imageSize, options.direction);
                 // Get or create required scale and its properties
@@ -42,20 +41,19 @@ export const ImageLabels: Plugin<'bar', ImageLabelsOptions> = {
                 if (isHorizontal) {
                     imagesScale.grid.tickLength = 0;
                     imagesScale.afterFit = (scaleInstance): void => {
-                        scaleInstance.height = maxSize + paddingClose + paddingFar;
+                        scaleInstance.height = maxSize + paddingInner + paddingOuter;
                     };
                 } else {
                     imagesScale.afterFit = (scaleInstance): void => {
-                        scaleInstance.width = maxSize + paddingClose + paddingFar;
+                        scaleInstance.width = maxSize + paddingInner + paddingOuter;
                     };
                 }
             }
         }
     },
     beforeDraw(chart: Chart<'bar'>, _args: { cancelable: true }, options: ImageLabelsOptions): void {
-        const display = resolve([options.display, DEFAULT_OPTIONS.display]);
+        const { display, direction, imageSize, images, paddingInner, paddingOuter, imagesScaleName, categoryScaleName } = Utils.resolveOptions(options);
         if (display) {
-            const { direction, imageSize, images, paddingClose, paddingFar, imagesScaleName, categoryScaleName } = Utils.resolveOptions(options);
             const isHorizontal = direction === 'horizontal';
             // Maximum width & length that the images should fit in
             const maxSize = Utils.findMaxImageSize(chart.scales, images.length, imageSize, options.direction);
@@ -66,8 +64,8 @@ export const ImageLabels: Plugin<'bar', ImageLabelsOptions> = {
 
             for (let index = 0; index < categoryScale.ticks.length; index++) {
                 const image = images[index];
-                const x = isHorizontal ? categoryScale.getPixelForTick(index) - maxSize / 2 : imagesScale.left + paddingFar;
-                const y = isHorizontal ? imagesScale.top + paddingClose : categoryScale.getPixelForTick(index) - maxSize / 2;
+                const x = isHorizontal ? categoryScale.getPixelForTick(index) - maxSize / 2 : imagesScale.left + paddingOuter;
+                const y = isHorizontal ? imagesScale.top + paddingInner : categoryScale.getPixelForTick(index) - maxSize / 2;
                 if (image) {
                     Utils.drawLabelImage(chart.ctx, image, x, y, maxSize);
                 } else if (image === null) {

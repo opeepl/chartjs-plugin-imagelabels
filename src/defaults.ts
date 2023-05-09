@@ -6,8 +6,8 @@ export const DEFAULT_IMAGES_SCALE = 'imagesScale';
 export const DEFAULT_OPTIONS = {
     display: true,
     imageSize: 48,
-    paddingClose: 10,
-    paddingFar: 0,
+    paddingInner: 10,
+    paddingOuter: 0,
     images: [],
     direction: 'horizontal',
     imagesScaleName: DEFAULT_IMAGES_SCALE,
