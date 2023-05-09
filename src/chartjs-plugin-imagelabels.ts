@@ -1,9 +1,8 @@
 import { Chart, Plugin, Scale } from 'chart.js';
-import { DEFAULT_IMAGES_SCALE, DEFAULT_OPTIONS, IMAGE_PLACEHOLDER } from './defaults';
+import { IMAGE_PLACEHOLDER } from './defaults';
 
 import type { ImageLabelsOptions } from './image-labels-options';
 import Utils from './utils';
-import { resolve } from 'chart.js/helpers';
 
 /**
  * ChartJS plugin that displays images across a dedicated category scale.
