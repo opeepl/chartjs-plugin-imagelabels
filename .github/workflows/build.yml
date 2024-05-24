@@ -1,0 +1,45 @@
+name: Publish package
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "package.json"
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run build
+      - run: npm run lint
+      - run: npm test
+
+      - uses: JS-DevTools/npm-publish@v3
+        id: publish
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          registry: "https://npm.pkg.github.com"
+
+      - name: Create tag
+        if: ${{ steps.publish.outputs.type }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.BOT_REPO_PAT }}
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/${{ steps.publish.outputs.version }}',
+              sha: context.sha
+            })

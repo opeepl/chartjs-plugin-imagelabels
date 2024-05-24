@@ -8,16 +8,14 @@
         "copy-svg": "cp src/*.svg dist/",
         "build": "tsc && npm run copy-svg",
         "lint": "eslint . --ext .ts",
-        "lint-and-fix": "eslint . --ext .ts --fix",
-        "prepare": "npm run build",
-        "prepublishOnly": "npm test && npm run lint",
-        "preversion": "npm run lint && npm test",
-        "version": "git add -A src",
-        "postversion": "git push && git push --tags"
+        "lint-and-fix": "eslint . --ext .ts --fix"
     },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/opeepl/chartjs-plugin-imagelabels.git"
+    },
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
     },
     "files": [
         "dist/**/*"
